@@ -1,5 +1,11 @@
 {
-  "key3": "value3",
-  "key2": "value2",
-  "key1": "value1"
+  "pathParameters": {
+    "id": "test_id"
+  },
+  "requestContext": {
+    "stage": "dev"
+  },
+  "body": {
+    "text": "new_text"
+  }
 }
