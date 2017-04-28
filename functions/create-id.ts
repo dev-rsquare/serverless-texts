@@ -1,8 +1,6 @@
 import {ProxyHandler} from 'aws-lambda';
 import {DynamoDB} from 'aws-sdk';
 
-declare const process: any;
-
 const dynamoDb = new DynamoDB.DocumentClient();
 
 export const createId: ProxyHandler = (event, context, callback) => {
@@ -10,16 +8,10 @@ export const createId: ProxyHandler = (event, context, callback) => {
     const {id} = pathParameters;
     const {text} = JSON.parse(body);
     const timestamp = Date.now();
-    const tableName = process.env.DYNAMODB_TABLE;
-    console.log(tableName, Object.keys(process.env));
-    if (!tableName) {
-        return callback(null, {
-            statusCode: 500,
-            body: JSON.stringify(process.env)
-        });
-    }
+    const ddbTable = process.env.DDB_TABLE;
+
     const params = {
-        TableName: tableName,
+        TableName: ddbTable,
         Item: {
             id, text,
             createdAt: timestamp,

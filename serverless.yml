@@ -1,4 +1,4 @@
-service: texts
+service: text
 
 provider:
   name: aws
