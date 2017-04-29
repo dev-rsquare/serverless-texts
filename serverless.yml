@@ -10,6 +10,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - lambda:InvokeFunction
+      Resource: "arn:aws:lambda:${opt:region, self:provider.region}:*:function:*"
+    - Effect: Allow
+      Action:
         - dynamodb:Query
         - dynamodb:Scan
         - dynamodb:GetItem
@@ -20,36 +24,46 @@ provider:
   environment:
     LANGUAGE: ko
     DDB_TABLE: ${self:service}-${self:provider.environment.LANGUAGE}-${opt:stage, self:provider.stage}
+    FX_PREFIX: ${self:service}-${opt:stage, self:provider.stage}
 
 functions:
-  json:
-    handler: handler.getJson
+  getTexts:
+    handler: functions/text/get.getTexts
     events:
       - http:
           path: texts
           method: get
           cors: true
   createId:
-    handler: handler.createId
+    handler: functions/text/create-id.createId
     events:
       - http:
           path: texts/{id}
           method: post
           cors: true
   updateId:
-    handler: handler.createId
+    handler: functions/text/create-id.createId
     events:
       - http:
           path: texts/{id}
           method: put
           cors: true
   deleteId:
-    handler: handler.deleteId
+    handler: functions/text/delete-id.deleteId
     events:
       - http:
           path: texts/{id}
           method: delete
           cors: true
+  createJson:
+    handler: functions/text/create-json.createJson
+    events:
+      - http:
+          path: texts/json
+          method: post
+          cors: true
+#  uploadToS3:
+#    handler: handler.uploadToS3
 
 resources:
   Resources:

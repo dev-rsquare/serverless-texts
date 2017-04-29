@@ -3,7 +3,7 @@ import {DynamoDB} from 'aws-sdk';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const getJson: ProxyHandler = (event, context, callback) => {
+export const getTexts: ProxyHandler = (event, context, callback) => {
     const params = {TableName: process.env.DDB_TABLE};
 
     dynamoDb.scan(params, (error, output) => {
