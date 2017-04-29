@@ -36,21 +36,21 @@ functions:
           path: texts/{id}
           method: post
           cors: true
-#  updateId:
-#    handler: handler.updateId
-#    events:
-#      - http:
-#          path: texts/{id}
-#          method: put
-#          cors: true
-#  deleteId:
-#    handler: handler.deleteId
-#    events:
-#      - http:
-#          path: texts/{id}
-#          method: delete
-#          cors: true
-#
+  updateId:
+    handler: handler.createId
+    events:
+      - http:
+          path: texts/{id}
+          method: put
+          cors: true
+  deleteId:
+    handler: handler.deleteId
+    events:
+      - http:
+          path: texts/{id}
+          method: delete
+          cors: true
+
 resources:
   Resources:
     TextsDynamoDbTable:
