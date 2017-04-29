@@ -10,6 +10,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - s3:PutObject
+      Resource: "*"
+    - Effect: Allow
+      Action:
         - lambda:InvokeFunction
       Resource: "arn:aws:lambda:${opt:region, self:provider.region}:*:function:*"
     - Effect: Allow
@@ -25,6 +29,7 @@ provider:
     LANGUAGE: ko
     DDB_TABLE: ${self:service}-${self:provider.environment.LANGUAGE}-${opt:stage, self:provider.stage}
     FX_PREFIX: ${self:service}-${opt:stage, self:provider.stage}
+    S3_BUCKET: serverless-${self:service}
 
 functions:
   getTexts:
@@ -62,8 +67,8 @@ functions:
           path: texts/json
           method: post
           cors: true
-#  uploadToS3:
-#    handler: handler.uploadToS3
+  upload:
+    handler: functions/common/upload.upload
 
 resources:
   Resources:
@@ -83,6 +88,11 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.DDB_TABLE}
+    TextsS3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: ${self:provider.environment.S3_BUCKET}
+        AccessControl: PublicRead
 
 # you can add packaging information here
 #package:

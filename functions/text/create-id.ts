@@ -12,7 +12,7 @@ export const createId: ProxyHandler = (event, context, callback) => {
 
     const params = {
         TableName: ddbTable,
-        Item: {
+        Item     : {
             id, text,
             createdAt: timestamp,
             updatedAt: timestamp

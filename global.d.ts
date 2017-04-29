@@ -27,6 +27,7 @@ interface TextEnv extends Env {
     LANGUAGE: string;
     DDB_TABLE: string;
     FX_PREFIX: string;
+    S3_BUCKET: string;
 }
 
 declare namespace NodeJS {

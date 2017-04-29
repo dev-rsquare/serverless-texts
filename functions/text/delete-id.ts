@@ -10,7 +10,7 @@ export const deleteId: ProxyHandler = (event, context, callback) => {
 
     const params = {
         TableName: ddbTable,
-        Key: {id}
+        Key      : {id}
     };
     dynamoDb.delete(params, (error, item) => {
         if (error) {
