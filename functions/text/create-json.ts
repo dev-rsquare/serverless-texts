@@ -10,24 +10,28 @@ export const createJson: ProxyHandler = (event, context, callback) => {
         },
         (err, data) => {
             if (err) {
+                console.error('fail to getTexts:\n', err);
                 return callback(null, {statusCode: 500, body: JSON.stringify(err)});
             }
             const response = JSON.parse(data.Payload as string);
             const body = JSON.parse(response.body);
-            const json = JSON.stringify(body.items);
-
-            lambda.invoke({
-                    FunctionName  : [process.env.FX_PREFIX, 'upload'].join('-'),
-                    InvocationType: 'RequestResponse',
-                    Payload       : json
-                },
+            const params = {
+                FunctionName  : [process.env.FX_PREFIX, 'upload'].join('-'),
+                InvocationType: 'RequestResponse',
+                Payload       : JSON.stringify({
+                    Key : 'texts.json',
+                    Body: JSON.stringify(body.items)
+                })
+            };
+            lambda.invoke(params,
                 (err, data) => {
                     if (err) {
+                        console.error('fail to upload:\n', err, params);
                         return callback(null, {statusCode: 500, body: JSON.stringify(err)});
                     }
-                    const {body} = JSON.parse(data.Payload as string);
+                    const {statusCode, body} = JSON.parse(data.Payload as string);
 
-                    return callback(null, {statusCode: 200, body});
+                    return callback(null, {statusCode, body});
                 });
         });
 };

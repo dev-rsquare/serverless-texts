@@ -12,10 +12,10 @@ export const deleteId: ProxyHandler = (event, context, callback) => {
         TableName: ddbTable,
         Key      : {id}
     };
-    dynamoDb.delete(params, (error, item) => {
-        if (error) {
-            console.error(error);
-            return callback(null, {statusCode: 500, body: JSON.stringify(error)});
+    dynamoDb.delete(params, (err, item) => {
+        if (err) {
+            console.error('fail to delete:\n', err, params);
+            return callback(null, {statusCode: 500, body: JSON.stringify(err)});
         }
 
         callback(null, {statusCode: 200, body: null});
