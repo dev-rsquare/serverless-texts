@@ -39,35 +39,45 @@ functions:
       - http:
           path: texts
           method: get
-          cors: true
+          cors:
+            origins:
+              - '*'
   createId:
     handler: functions/text/create-id.createId
     events:
       - http:
           path: texts/{id}
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
   updateId:
     handler: functions/text/create-id.createId
     events:
       - http:
           path: texts/{id}
           method: put
-          cors: true
+          cors:
+            origins:
+              - '*'
   deleteId:
     handler: functions/text/delete-id.deleteId
     events:
       - http:
           path: texts/{id}
           method: delete
-          cors: true
+          cors:
+            origins:
+              - '*'
   createJson:
     handler: functions/text/create-json.createJson
     events:
       - http:
           path: texts/json
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
   upload:
     handler: functions/common/upload.upload
 

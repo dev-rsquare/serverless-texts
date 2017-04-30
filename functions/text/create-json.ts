@@ -23,15 +23,17 @@ export const createJson: ProxyHandler = (event, context, callback) => {
                     Body: JSON.stringify(body.items)
                 })
             };
-            lambda.invoke(params,
-                (err, data) => {
-                    if (err) {
-                        console.error('fail to upload:\n', err, params);
-                        return callback(null, {statusCode: 500, body: JSON.stringify(err)});
-                    }
-                    const {statusCode, body} = JSON.parse(data.Payload as string);
+            lambda.invoke(params, (err, data) => {
+                if (err) {
+                    console.error('fail to upload:\n', err, params);
+                    return callback(null, {statusCode: 500, body: JSON.stringify(err)});
+                }
+                const {statusCode, body} = JSON.parse(data.Payload as string);
 
-                    return callback(null, {statusCode, body});
+                return callback(null, {
+                    statusCode, body,
+                    headers: {'Access-Control-Allow-Origin' : '*'}
                 });
+            });
         });
 };

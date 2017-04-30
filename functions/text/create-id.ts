@@ -24,6 +24,10 @@ export const createId: ProxyHandler = (event, context, callback) => {
             return callback(null, {statusCode: 500, body: `Couldn\'t create the todo item.`});
         }
 
-        callback(null, {statusCode: 200, body: JSON.stringify(params.Item)});
+        callback(null, {
+            statusCode: 200,
+            headers: {'Access-Control-Allow-Origin' : '*'},
+            body: JSON.stringify(params.Item)
+        });
     });
 };

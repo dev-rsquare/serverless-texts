@@ -18,6 +18,10 @@ export const deleteId: ProxyHandler = (event, context, callback) => {
             return callback(null, {statusCode: 500, body: JSON.stringify(err)});
         }
 
-        callback(null, {statusCode: 200, body: null});
+        callback(null, {
+            statusCode: 200,
+            headers: {'Access-Control-Allow-Origin' : '*'},
+            body: null
+        });
     });
 };
