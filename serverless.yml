@@ -42,6 +42,14 @@ functions:
           cors:
             origins:
               - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
   createId:
     handler: functions/text/create-id.createId
     events:
@@ -51,6 +59,14 @@ functions:
           cors:
             origins:
               - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
   updateId:
     handler: functions/text/create-id.createId
     events:
@@ -60,6 +76,14 @@ functions:
           cors:
             origins:
               - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
   deleteId:
     handler: functions/text/delete-id.deleteId
     events:
@@ -69,6 +93,14 @@ functions:
           cors:
             origins:
               - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
   createJson:
     handler: functions/text/create-json.createJson
     events:
@@ -78,6 +110,14 @@ functions:
           cors:
             origins:
               - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
   upload:
     handler: functions/common/upload.upload
 
