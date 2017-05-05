@@ -120,6 +120,23 @@ functions:
             allowCredentials: false
   upload:
     handler: functions/common/upload.upload
+  translator:
+    handler: functions/text/tag.translator
+    events:
+      - http:
+          path: texts/translator
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+            allowCredentials: false
 
 resources:
   Resources:
