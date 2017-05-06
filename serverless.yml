@@ -120,11 +120,11 @@ functions:
             allowCredentials: false
   upload:
     handler: functions/common/upload.upload
-  translator:
-    handler: functions/text/tag.translator
+  format:
+    handler: functions/text/format.i18n
     events:
       - http:
-          path: texts/translator
+          path: texts/i18n
           method: get
           cors:
             origins:
