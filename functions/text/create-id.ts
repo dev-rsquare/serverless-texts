@@ -21,7 +21,7 @@ export const createId: ProxyHandler = (event, context, callback) => {
     dynamoDb.put(params, (error) => {
         if (error) {
             console.error(error);
-            return callback(null, {statusCode: 500, body: `Couldn\'t create the todo item.`});
+            return callback(null, {statusCode: 500, body: `Couldn\'t create the item.`});
         }
 
         callback(null, {

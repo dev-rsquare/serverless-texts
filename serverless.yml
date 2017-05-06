@@ -68,7 +68,7 @@ functions:
               - X-Requested-With
             allowCredentials: false
   updateId:
-    handler: functions/text/create-id.createId
+    handler: functions/text/update-id.updateId
     events:
       - http:
           path: texts/{id}
