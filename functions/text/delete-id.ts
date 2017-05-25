@@ -1,25 +1,23 @@
 import {ProxyHandler} from 'aws-lambda';
-import {dynamoDb} from '../common/index';
+import {createErrorHandler, createOkHandler, dynamoDb} from '../common/index';
 
 export const deleteId: ProxyHandler = (event, context, callback) => {
+    const errorHandler = createErrorHandler(callback);
+    const okHandler = createOkHandler(callback);
     const {pathParameters, body} = event;
     const {id} = pathParameters;
     const ddbTable = process.env.DDB_TABLE;
 
     const params = {
         TableName: ddbTable,
-        Key      : {id}
+        Key      : {
+            id
+        }
     };
     dynamoDb.delete(params, (err, item) => {
         if (err) {
-            console.error('fail to delete:\n', err, params);
-            return callback(null, {statusCode: 500, body: JSON.stringify(err)});
+            return errorHandler(JSON.stringify(err));
         }
-
-        callback(null, {
-            statusCode: 200,
-            headers: {'Access-Control-Allow-Origin' : '*'},
-            body: null
-        });
+        okHandler(null);
     });
 };

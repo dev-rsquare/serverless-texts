@@ -1,7 +1,9 @@
 import {ProxyHandler} from 'aws-lambda';
-import {dynamoDb} from '../common/index';
+import {createErrorHandler, createOkHandler, dynamoDb} from '../common/index';
 
 export const createId: ProxyHandler = (event, context, callback) => {
+    const errorHandler = createErrorHandler(callback);
+    const okHandler = createOkHandler(callback);
     const {pathParameters, body} = event;
     const {id} = pathParameters;
     const {text} = JSON.parse(body);
@@ -17,16 +19,10 @@ export const createId: ProxyHandler = (event, context, callback) => {
             revision: 0
         }
     };
-    dynamoDb.put(params, (error) => {
-        if (error) {
-            console.error(error);
-            return callback(null, {statusCode: 500, body: `Couldn\'t create the item.`});
+    dynamoDb.put(params, (err) => {
+        if (err) {
+            return errorHandler(JSON.stringify(err));
         }
-
-        callback(null, {
-            statusCode: 200,
-            headers: {'Access-Control-Allow-Origin' : '*'},
-            body: JSON.stringify(params.Item)
-        });
+        okHandler(JSON.stringify(params.Item));
     });
 };

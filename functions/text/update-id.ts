@@ -32,7 +32,7 @@ export const updateId: ProxyHandler = (event, context, callback) => {
         };
         dynamoDb.update(updateParam, (err, item) => {
             if (err) {
-                return errorHandler(err);
+                return errorHandler(JSON.stringify(err));
             }
             const createParam = {
                 TableName: ddbLogTable,

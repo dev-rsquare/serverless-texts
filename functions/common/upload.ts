@@ -1,9 +1,12 @@
 import {ProxyHandler} from 'aws-lambda';
 import {S3} from 'aws-sdk';
+import {createErrorHandler, createOkHandler} from './index';
 
 const s3 = new S3();
 
 export const upload: ProxyHandler = (event, context, callback) => {
+    const errorHandler = createErrorHandler(callback);
+    const okHandler = createOkHandler(callback);
     const {Key, Body} = event as any;
     const params = {
         Bucket: process.env.S3_BUCKET,
@@ -12,9 +15,8 @@ export const upload: ProxyHandler = (event, context, callback) => {
     };
     s3.upload(params, (err, data) => {
         if (err) {
-            console.error('fail to s3 upload:\n', err, params);
-            return callback(null, {statusCode: 500, body: JSON.stringify(err)});
+            return errorHandler(JSON.stringify(err));
         }
-        return callback(null, {statusCode: 200, body: data.Location});
+        okHandler(data.Location);
     });
 };
