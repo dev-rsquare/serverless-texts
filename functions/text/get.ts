@@ -1,7 +1,5 @@
 import {ProxyHandler} from 'aws-lambda';
-import {DynamoDB} from 'aws-sdk';
-
-const dynamoDb = new DynamoDB.DocumentClient();
+import {dynamoDb} from '../common/index';
 
 export const getTexts: ProxyHandler = (event, context, callback) => {
     const params = {TableName: process.env.DDB_TABLE};

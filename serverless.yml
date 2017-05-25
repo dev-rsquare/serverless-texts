@@ -26,8 +26,17 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DDB_TABLE}"
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DDB_LOG_TABLE}"
   environment:
     LANGUAGE: ko
+    DDB_LOG_TABLE: ${self:service}-log-${self:provider.environment.LANGUAGE}-${opt:stage, self:provider.stage}
     DDB_TABLE: ${self:service}-${self:provider.environment.LANGUAGE}-${opt:stage, self:provider.stage}
     FX_PREFIX: ${self:service}-${opt:stage, self:provider.stage}
     S3_BUCKET: serverless-${self:service}
@@ -137,7 +146,6 @@ functions:
               - X-Amz-Security-Token
               - X-Requested-With
             allowCredentials: false
-
 resources:
   Resources:
     TextsDynamoDbTable:
@@ -156,6 +164,25 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.DDB_TABLE}
+    TextsLogDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DDB_LOG_TABLE}
     TextsS3Bucket:
       Type: 'AWS::S3::Bucket'
       Properties:

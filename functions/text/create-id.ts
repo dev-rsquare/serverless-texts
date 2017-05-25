@@ -1,7 +1,5 @@
 import {ProxyHandler} from 'aws-lambda';
-import {DynamoDB} from 'aws-sdk';
-
-const dynamoDb = new DynamoDB.DocumentClient();
+import {dynamoDb} from '../common/index';
 
 export const createId: ProxyHandler = (event, context, callback) => {
     const {pathParameters, body} = event;
@@ -15,7 +13,8 @@ export const createId: ProxyHandler = (event, context, callback) => {
         Item     : {
             id, text,
             createdAt: timestamp,
-            updatedAt: timestamp
+            updatedAt: timestamp,
+            revision: 0
         }
     };
     dynamoDb.put(params, (error) => {
