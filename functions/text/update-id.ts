@@ -1,6 +1,4 @@
 import {ProxyHandler} from 'aws-lambda';
-import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
-import ExpressionAttributeNameMap = DocumentClient.ExpressionAttributeNameMap;
 import {createErrorHandler, createOkHandler, dynamoDb} from '../common/index';
 import {createLog} from '../log/index';
 
@@ -20,13 +18,14 @@ export const updateId: ProxyHandler = (event, context, callback) => {
         const updateParam = {
             TableName: ddbTable,
             Key: {id},
-            UpdateExpression: `set #t=:t, updatedAt=:u, revision=${oldItem.Item.revision + 1}`,
+            UpdateExpression: `set #t=:t, updatedAt=:u, revision=:r`,
             ExpressionAttributeNames: {
                 '#t': 'text'
             },
             ExpressionAttributeValues:{
                 ':t': text,
-                ':u': timestamp
+                ':u': timestamp,
+                ':r': (oldItem.Item.revision||0) + 1
             },
             ReturnValues:'UPDATED_NEW'
         };
