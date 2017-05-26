@@ -10,6 +10,5 @@ export const createErrorHandler = callback => (body, statusCode = 500) => {
     callback(null, {headers, statusCode, body});
 };
 export const createOkHandler = callback => (body, statusCode = 200) => {
-    console.error(`[${statusCode}] `, body);
     callback(null, {headers, statusCode, body});
 };
