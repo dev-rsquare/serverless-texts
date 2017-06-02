@@ -2,6 +2,7 @@ import {ProxyHandler} from 'aws-lambda';
 import {createErrorHandler, createOkHandler, dynamoDb} from '../common/index';
 
 export const getTexts: ProxyHandler = (event, context, callback) => {
+    console.log(event);
     const errorHandler = createErrorHandler(callback);
     const okHandler = createOkHandler(callback);
     const params = {
@@ -9,6 +10,7 @@ export const getTexts: ProxyHandler = (event, context, callback) => {
     };
 
     dynamoDb.scan(params, (err, output) => {
+        console.log(err, output);
         if (err) {
             return errorHandler(JSON.stringify(err));
         }
