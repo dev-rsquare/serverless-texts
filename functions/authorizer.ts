@@ -9,7 +9,7 @@ export const verify: CustomAuthorizerHandler = (event, context, callback) => {
     jwt.verify(token, secret, {algorithms: ['HS256']}, (err, payload) => {
         if (err) {
             console.error(`Unauthorized - invalid token : ${JSON.stringify(err)}`);
-            return callback(null, generatePolicy('Deny', event.methodArn));
+            return callback('Unauthorized' as any as Error);
         }
         return callback(null, generatePolicy('Allow', event.methodArn));
     });
