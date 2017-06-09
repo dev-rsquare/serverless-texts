@@ -78,7 +78,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   createId:
     handler: functions/text/create-id.createId
     events:
@@ -96,7 +96,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   updateId:
     handler: functions/text/update-id.updateId
     events:
@@ -114,7 +114,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   deleteId:
     handler: functions/text/delete-id.deleteId
     events:
@@ -132,7 +132,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   createJson:
     handler: functions/text/create-json.createJson
     events:
@@ -149,7 +149,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   upload:
     handler: functions/common/upload.upload
   format:
@@ -168,7 +168,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
   getLogs:
     handler: functions/log/get-logs.getLogs
     events:
@@ -185,7 +185,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Requested-With
-            allowCredentials: false
+            allowCredentials: true
 resources:
   Resources:
     TextsDynamoDbTable:
